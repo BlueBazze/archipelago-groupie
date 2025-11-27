@@ -2,6 +2,28 @@
  * Get application settings
  * GET /api/admin/settings
  */
+defineRouteMeta({
+  openAPI: {
+    tags: ["admin"],
+    description: "Get application settings (Admin only)",
+    responses: {
+      200: {
+        description: "Application settings",
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                allowPlayerSignup: { type: "boolean" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+});
+
 export default defineEventHandler(async (event) => {
   await requireAdmin(event);
 

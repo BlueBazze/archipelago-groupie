@@ -4,6 +4,38 @@
  * Body: { name, yamlContent, yamlFilename }
  * Accessible by admin or the player themselves
  */
+defineRouteMeta({
+  openAPI: {
+    tags: ["player"],
+    description: "Upload new YAML file for a player",
+    parameters: [
+      {
+        in: "path",
+        name: "playerId",
+        required: true,
+        schema: { type: "integer" },
+      },
+    ],
+    requestBody: {
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            required: ["name", "yamlContent"],
+            properties: {
+              yamlContent: { type: "string" },
+            },
+          },
+        },
+      },
+    },
+    responses: {
+      200: { description: "YAML file uploaded successfully" },
+      400: { description: "Invalid input" },
+    },
+  },
+});
+
 export default defineEventHandler(async (event) => {
   const playerIdParam = getRouterParam(event, "playerId");
 
@@ -19,16 +51,9 @@ export default defineEventHandler(async (event) => {
   // Require admin or current user
   await requireAdminOrCurrentUser(event, playerId);
 
-  const { name, yamlContent, yamlFilename } = await readBody(event);
+  const { yamlContent } = await readBody(event);
 
   // Validate input
-  if (!name || typeof name !== "string" || name.trim() === "") {
-    throw createError({
-      statusCode: 400,
-      message: "Game name is required",
-    });
-  }
-
   if (
     !yamlContent ||
     typeof yamlContent !== "string" ||
@@ -50,14 +75,18 @@ export default defineEventHandler(async (event) => {
     });
   }
 
+  const parsedYaml = parseYAML<any>(yamlContent);
+  const gameName = parsedYaml.game;
+  const yamlFilename = `${playerId}_${gameName}.yaml`;
+
   // Create the game
   const result = await useDrizzle()
     .insert(drizzleSchema.tables.games)
     .values({
       playerId: playerId,
-      name: name.trim(),
+      name: gameName,
       yamlContent: yamlContent,
-      yamlFilename: yamlFilename || `${name.trim()}.yaml`,
+      yamlFilename: yamlFilename || `${gameName.trim()}.yaml`,
       uploadedAt: sql`(unixepoch())`,
     })
     .returning();

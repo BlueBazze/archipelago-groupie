@@ -4,6 +4,21 @@
  * DELETE /api/games/:id
  * Accessible by admin or the owner of the game
  */
+defineRouteMeta({
+  openAPI: {
+    tags: ["games"],
+    description: "Delete a specific game/YAML",
+    parameters: [
+      { in: "path", name: "id", required: true, schema: { type: "integer" } }
+    ],
+    responses: {
+      200: { description: "Game deleted successfully" },
+      400: { description: "Invalid game ID" },
+      404: { description: "Game not found" }
+    }
+  }
+});
+
 export default defineEventHandler(async (event) => {
   const gameIdParam = getRouterParam(event, "id");
 

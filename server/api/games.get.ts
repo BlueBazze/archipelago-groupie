@@ -2,6 +2,28 @@
  * Get all games (all player YAMLs) with player information
  * GET /api/games
  */
+defineRouteMeta({
+  openAPI: {
+    tags: ["games"],
+    description: "Get all games with player information",
+    responses: {
+      200: {
+        description: "List of all games",
+        content: {
+          "application/json": {
+            schema: {
+              type: "array",
+              items: {
+                type: "object"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+});
+
 export default defineEventHandler(async (event) => {
   await requireAuth(event);
 

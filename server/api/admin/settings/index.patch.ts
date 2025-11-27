@@ -3,6 +3,41 @@
  * PATCH /api/admin/settings
  * Body: { allowPlayerSignup?: boolean }
  */
+defineRouteMeta({
+  openAPI: {
+    tags: ["admin"],
+    description: "Update application settings (Admin only)",
+    requestBody: {
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            properties: {
+              allowPlayerSignup: { type: "boolean" },
+            },
+          },
+        },
+      },
+    },
+    responses: {
+      200: {
+        description: "Settings updated successfully",
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                success: { type: "boolean" },
+                allowPlayerSignup: { type: "boolean" },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+});
+
 export default defineEventHandler(async (event) => {
   const db = useDrizzle();
   const body = await readBody(event);

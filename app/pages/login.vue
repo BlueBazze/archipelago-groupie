@@ -61,24 +61,14 @@ async function handleSubmit(data: { username: string; password: string }) {
         <p class="text-muted">Sign in to manage your game sessions</p>
       </div>
 
-      <!-- Login Card -->
-      <UCard>
-        <template #header>
-          <div class="flex items-center gap-3">
-            <UIcon name="i-heroicons-arrow-right-on-rectangle" class="size-6" />
-            <h2 class="text-xl font-semibold">Sign In</h2>
-          </div>
-        </template>
+      <AuthLoginForm :loading="loading" />
 
-        <AuthLoginForm :loading="loading" @submit="handleSubmit" />
-
-        <template #footer>
-          <div class="text-center text-sm">
-            <span class="text-muted">Don't have an account?</span>
-            <NuxtLink to="/signup" class="ml-1 font-medium"> Sign up </NuxtLink>
-          </div>
-        </template>
-      </UCard>
+      <!-- <template #footer>
+        <div class="text-center text-sm">
+          <span class="text-muted">Don't have an account?</span>
+          <NuxtLink to="/signup" class="ml-1 font-medium"> Sign up </NuxtLink>
+        </div>
+      </template> -->
 
       <!-- Footer Info -->
       <p class="mt-6 text-center text-sm text-muted">

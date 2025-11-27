@@ -2,6 +2,21 @@
  * Delete a player (admin only)
  * DELETE /api/admin/players/:id
  */
+defineRouteMeta({
+  openAPI: {
+    tags: ["admin"],
+    description: "Delete a player (Admin only)",
+    parameters: [
+      { in: "path", name: "id", required: true, schema: { type: "integer" } }
+    ],
+    responses: {
+      200: { description: "Player deleted successfully" },
+      400: { description: "Invalid player ID or cannot delete own account" },
+      404: { description: "Player not found" }
+    }
+  }
+});
+
 export default defineEventHandler(async (event) => {
   await requireAdmin(event);
 

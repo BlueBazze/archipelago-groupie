@@ -3,6 +3,37 @@
  * GET /api/player/:playerId/games
  * Accessible by authenticated users
  */
+defineRouteMeta({
+  openAPI: {
+    tags: ["player"],
+    description: "List a player's games/YAMLs",
+    parameters: [
+      {
+        in: "path",
+        name: "playerId",
+        required: true,
+        schema: { type: "integer" },
+      },
+    ],
+    responses: {
+      200: {
+        description: "List of player's games",
+        content: {
+          "application/json": {
+            schema: {
+              type: "array",
+              items: {
+                type: "object",
+              },
+            },
+          },
+        },
+      },
+      400: { description: "Invalid player ID" },
+    },
+  },
+});
+
 export default defineEventHandler(async (event) => {
   // Require authenticated user
   await requireAuth(event);

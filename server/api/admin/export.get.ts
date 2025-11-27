@@ -3,6 +3,27 @@
  * GET /api/admin/export
  * Admin only
  */
+defineRouteMeta({
+  openAPI: {
+    tags: ["admin"],
+    description: "Export all player YAMLs as a ZIP file (Admin only)",
+    responses: {
+      200: {
+        description: "ZIP file containing all YAMLs",
+        content: {
+          "application/zip": {
+            schema: {
+              type: "string",
+              format: "binary"
+            }
+          }
+        }
+      },
+      404: { description: "No games found to export" }
+    }
+  }
+});
+
 export default defineEventHandler(async (event) => {
   await requireAdmin(event);
 

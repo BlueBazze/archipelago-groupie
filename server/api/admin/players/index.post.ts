@@ -3,6 +3,45 @@
  * POST /api/admin/players
  * Body: { username } - password will be auto-generated
  */
+defineRouteMeta({
+  openAPI: {
+    tags: ["admin"],
+    description: "Create a new player (Admin only) - password will be auto-generated",
+    requestBody: {
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            required: ["username"],
+            properties: {
+              username: { type: "string" }
+            }
+          }
+        }
+      }
+    },
+    responses: {
+      200: {
+        description: "Player created successfully",
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                success: { type: "boolean" },
+                player: { type: "object" },
+                generatedPassword: { type: "string" }
+              }
+            }
+          }
+        }
+      },
+      400: { description: "Invalid input" },
+      409: { description: "Username already exists" }
+    }
+  }
+});
+
 export default defineEventHandler(async (event) => {
   await requireAdmin(event);
 

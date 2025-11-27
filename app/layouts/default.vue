@@ -1,3 +1,8 @@
 <template>
-  <slot />
+  <UApp>
+    <AppHeader />
+    <UMain>
+      <slot />
+    </UMain>
+  </UApp>
 </template>

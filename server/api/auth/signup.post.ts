@@ -5,6 +5,52 @@ import { count } from "drizzle-orm";
  * POST /api/auth/signup
  * Body: { username, password }
  */
+defineRouteMeta({
+  openAPI: {
+    tags: ["auth"],
+    description: "Player self-signup (only works if globally enabled by admin)",
+    requestBody: {
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            required: ["username", "password"],
+            properties: {
+              username: { type: "string", minLength: 3 },
+              password: { type: "string", minLength: 8 }
+            }
+          }
+        }
+      }
+    },
+    responses: {
+      200: {
+        description: "User signed up successfully",
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                success: { type: "boolean" },
+                user: {
+                  type: "object",
+                  properties: {
+                    id: { type: "integer" },
+                    username: { type: "string" },
+                    role: { type: "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      400: { description: "Invalid input or username already taken" },
+      403: { description: "Player self-signup is disabled" }
+    }
+  }
+});
+
 export default defineEventHandler(async (event) => {
   const db = useDrizzle();
 

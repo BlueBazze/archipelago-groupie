@@ -1,5 +1,6 @@
 <template>
   <UApp>
+    <GlobalDropZone />
     <NuxtRouteAnnouncer />
     <NuxtLayout>
       <NuxtPage />

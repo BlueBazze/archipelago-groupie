@@ -3,6 +3,52 @@
  * POST /api/auth/login
  * Body: { username, password }
  */
+defineRouteMeta({
+  openAPI: {
+    tags: ["auth"],
+    description: "Login endpoint for both admin and players",
+    requestBody: {
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            required: ["username", "password"],
+            properties: {
+              username: { type: "string" },
+              password: { type: "string" }
+            }
+          }
+        }
+      }
+    },
+    responses: {
+      200: {
+        description: "Login successful",
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                success: { type: "boolean" },
+                user: {
+                  type: "object",
+                  properties: {
+                    id: { type: "integer" },
+                    username: { type: "string" },
+                    role: { type: "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      400: { description: "Username and password are required" },
+      401: { description: "Invalid username or password" }
+    }
+  }
+});
+
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
   const { username, password } = body;

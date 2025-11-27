@@ -4,6 +4,36 @@
  * GET /api/games/:id/schema
  * Accessible by admin or the owner of the game
  */
+defineRouteMeta({
+  openAPI: {
+    tags: ["games"],
+    description: "Get parsed YAML structure for form generation",
+    parameters: [
+      { in: "path", name: "id", required: true, schema: { type: "integer" } }
+    ],
+    responses: {
+      200: {
+        description: "Parsed YAML schema",
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                gameId: { type: "integer" },
+                gameName: { type: "string" },
+                schema: { type: "object" }
+              }
+            }
+          }
+        }
+      },
+      400: { description: "Invalid game ID" },
+      404: { description: "Game or YAML content not found" },
+      500: { description: "Failed to parse YAML content" }
+    }
+  }
+});
+
 export default defineEventHandler(async (event) => {
   const gameIdParam = getRouterParam(event, "id");
 

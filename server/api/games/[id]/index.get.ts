@@ -3,6 +3,30 @@
  * GET /api/games/:id
  * Accessible by authenticated users
  */
+defineRouteMeta({
+  openAPI: {
+    tags: ["games"],
+    description: "Get a specific game/YAML by ID",
+    parameters: [
+      { in: "path", name: "id", required: true, schema: { type: "integer" } }
+    ],
+    responses: {
+      200: {
+        description: "Game details",
+        content: {
+          "application/json": {
+            schema: {
+              type: "object"
+            }
+          }
+        }
+      },
+      400: { description: "Invalid game ID" },
+      404: { description: "Game not found" }
+    }
+  }
+});
+
 export default defineEventHandler(async (event) => {
   // Require authenticated user
   await requireAuth(event);

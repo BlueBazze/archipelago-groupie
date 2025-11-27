@@ -5,6 +5,35 @@
  * Body: { yamlContent?, yamlFilename?, name? }
  * Accessible by admin or the owner of the game
  */
+defineRouteMeta({
+  openAPI: {
+    tags: ["games"],
+    description: "Update YAML content, filename, or name",
+    parameters: [
+      { in: "path", name: "id", required: true, schema: { type: "integer" } }
+    ],
+    requestBody: {
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            properties: {
+              yamlContent: { type: "string" },
+              yamlFilename: { type: "string" },
+              name: { type: "string" }
+            }
+          }
+        }
+      }
+    },
+    responses: {
+      200: { description: "Game updated successfully" },
+      400: { description: "Invalid input" },
+      404: { description: "Game not found" }
+    }
+  }
+});
+
 export default defineEventHandler(async (event) => {
   const gameIdParam = getRouterParam(event, "id");
 

@@ -2,6 +2,10 @@
 import { z } from "zod";
 import type { FormSubmitEvent, AuthFormField, AuthFormProps } from "@nuxt/ui";
 
+const toast = useToast();
+const route = useRoute();
+const { fetch: fetchUserSession } = useUserSession();
+
 const props = withDefaults(defineProps<AuthFormProps<Schema>>(), {
   submit: {
     // @ts-expect-error - label is a valid prop for ButtonProps
@@ -38,6 +42,31 @@ const schema = z.object({
 });
 
 type Schema = z.output<typeof schema>;
+
+async function onSubmit(event: FormSubmitEvent<Schema>) {
+  try {
+    await $fetch("/api/auth/login", {
+      method: "POST",
+      body: event.data,
+    });
+    toast.add({
+      title: "Logged in successfully",
+      color: "success",
+    });
+    const redirectPath = (route.query.redirect as string) || "/";
+
+    await fetchUserSession();
+
+    navigateTo(redirectPath);
+  } catch (err: any) {
+    toast.add({
+      title: "Login failed",
+      description: err.data?.message || err.message,
+      color: "error",
+    });
+    throw err;
+  }
+}
 </script>
 
 <template>
@@ -45,7 +74,7 @@ type Schema = z.output<typeof schema>;
     v-bind="props"
     :schema="schema"
     :fields="fields"
-    @submit="emit('submit', $event.data)"
+    @submit="onSubmit"
   >
   </UAuthForm>
 </template>

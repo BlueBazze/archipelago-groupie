@@ -3,6 +3,28 @@
  * GET /api/my/games/:id
  * Internally calls /api/games/:id
  */
+defineRouteMeta({
+  openAPI: {
+    tags: ["my-games"],
+    description: "Get a specific game/YAML for current user",
+    parameters: [
+      { in: "path", name: "id", required: true, schema: { type: "integer" } }
+    ],
+    responses: {
+      200: {
+        description: "Game details",
+        content: {
+          "application/json": {
+            schema: {
+              type: "object"
+            }
+          }
+        }
+      }
+    }
+  }
+});
+
 export default defineEventHandler(async (event) => {
   await requireAuth(event);
 
