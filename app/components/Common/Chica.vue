@@ -40,7 +40,7 @@ function onVideoEnded() {
     >
     <img :src="imgs[Math.floor(Math.random() * imgs.length)]" class="w-full h-full object-cover max-h-72">
     <div class="absolute top-0 left-0 right-0  bg-black">
-      <span class="text-white text-2xl font-bold">Hot seals your area</span>
+      <span class="text-white text-2xl font-bold">Hot seals in your area</span>
       <br/>
       <span class="text-blue-500 underline text-sm cursor-pointer">View more</span>
     </div>
