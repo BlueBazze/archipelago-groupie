@@ -167,7 +167,7 @@ const userMenuItems = computed(() => [
         />
       </template>
       <template #footer="{ collapsed }">
-        <CommonChica />
+        <CommonChica v-if="Math.random() < 0.1" />
         <br />
         <UColorModeSelect
           :content="{ side: 'right' }"
