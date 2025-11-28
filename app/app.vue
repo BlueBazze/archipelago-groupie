@@ -1,8 +1,8 @@
 <template>
   <UApp>
-    <ClientOnly>
+    <!-- <ClientOnly>
       <GlobalDropZone />
-    </ClientOnly>
+    </ClientOnly> -->
     <NuxtRouteAnnouncer />
     <NuxtLayout>
       <NuxtPage />
