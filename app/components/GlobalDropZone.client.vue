@@ -16,7 +16,6 @@ onMounted(() => {
 
 const { files, isOverDropZone } = useDropZone(bodyEl, {
   // dataTypes: ["text/yaml", "text/x-yaml", "application/x-yaml"],
-  multiple: false,
   onDrop: async (files) => {
     if (!files || files.length === 0 || !files[0]) return;
 
