@@ -79,7 +79,7 @@ const idledFor = computed(() => {
   return active > 0 ? active : 0;
 });
 
-const MIN_DURATION = 0.5;
+const MIN_DURATION = 0.1;
 const MAX_DURATION = 18;
 
 // Compute duration based on idle time - directly as computed without separate ref
