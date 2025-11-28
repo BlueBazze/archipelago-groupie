@@ -5,7 +5,15 @@ const toast = useToast();
 const instance = getCurrentInstance();
 const uploadFileContent = useUploadFileContent();
 
-const { files, isOverDropZone } = useDropZone(document.body, {
+const bodyEl = ref<HTMLElement | null>(null);
+
+onMounted(() => {
+  if (import.meta.client) {
+    bodyEl.value = document.body;
+  }
+});
+
+const { files, isOverDropZone } = useDropZone(bodyEl, {
   // dataTypes: ["text/yaml", "text/x-yaml", "application/x-yaml"],
   multiple: false,
   onDrop: async (files) => {
