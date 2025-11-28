@@ -6,7 +6,7 @@ const props = defineProps<{ error: NuxtError }>();
 
 <template>
   <div>
-    <h1>{{ JSON.stringify({ error }) }}</h1>
+    <h1>{{ JSON.stringify({ error: error.toJSON() }) }}</h1>
     <NuxtLink to="/">Go back home</NuxtLink>
   </div>
 </template>
