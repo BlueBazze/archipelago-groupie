@@ -60,42 +60,44 @@ const cancelSave = () => {
 <template>
   <div id="defaultActions"></div>
   <!-- Action Buttons -->
-  <Teleport :to="teleportActionsTo">
-    <div
-      v-if="showSaveButton && (showDiff || hasChanges)"
-      class="flex justify-end gap-2"
-    >
-      <UButton
-        v-if="showDiff"
-        variant="ghost"
-        @click="cancelSave"
-        :disabled="loading"
+  <ClientOnly>
+    <Teleport :to="teleportActionsTo">
+      <div
+        v-if="showSaveButton && (showDiff || hasChanges)"
+        class="flex justify-end gap-2"
       >
-        Cancel
-      </UButton>
-      <UButton
-        v-if="showDiff"
-        color="primary"
-        :loading="loading"
-        :disabled="loading"
-        size="lg"
-        icon="i-heroicons-check"
-        @click="confirmSave"
-      >
-        Confirm & Save
-      </UButton>
-      <UButton
-        v-else
-        :loading="loading"
-        :disabled="loading"
-        size="lg"
-        icon="i-heroicons-check"
-        @click="handleSaveClick"
-      >
-        Save Changes
-      </UButton>
-    </div>
-  </Teleport>
+        <UButton
+          v-if="showDiff"
+          variant="ghost"
+          @click="cancelSave"
+          :disabled="loading"
+        >
+          Cancel
+        </UButton>
+        <UButton
+          v-if="showDiff"
+          color="primary"
+          :loading="loading"
+          :disabled="loading"
+          size="lg"
+          icon="i-heroicons-check"
+          @click="confirmSave"
+        >
+          Confirm & Save
+        </UButton>
+        <UButton
+          v-else
+          :loading="loading"
+          :disabled="loading"
+          size="lg"
+          icon="i-heroicons-check"
+          @click="handleSaveClick"
+        >
+          Save Changes
+        </UButton>
+      </div>
+    </Teleport>
+  </ClientOnly>
 
   <!-- Diff Editor (shown when confirming) -->
   <MonacoDiffEditor

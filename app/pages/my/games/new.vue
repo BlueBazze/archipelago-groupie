@@ -3,13 +3,17 @@ definePageMeta({
   middleware: ["auth"],
 });
 
+const toast = useToast();
 const { user } = useUserSession();
 const router = useRouter();
-const route = useRoute();
 const uploading = ref(false);
 
+const uploadFileContent = useUploadFileContent();
+
 // Pre-fill from drop zone if available
-const yamlContent = ref((route.query.content as string) || "");
+// const yamlContent = ref((route.query.content as string) || "");
+// const yamlContent = ref(history.state.content);
+const yamlContent = ref(uploadFileContent.value);
 
 // Computed values from YAML
 const parsedYaml = computed<any>(() => {
@@ -60,10 +64,17 @@ const handleCreate = async () => {
       },
     });
 
-    alert("Game created successfully!");
-    router.push("/my/games");
+    toast.add({
+      title: "Game created successfully!",
+      color: "success",
+    });
+    navigateTo({ name: "index" });
   } catch (err: any) {
-    alert(err.data?.message || "Failed to create game");
+    toast.add({
+      title: "Failed to create game",
+      description: err.data?.message || "Failed to create game",
+      color: "error",
+    });
   } finally {
     uploading.value = false;
   }
@@ -71,7 +82,7 @@ const handleCreate = async () => {
 </script>
 
 <template>
-  <UDashboardPanel >
+  <UDashboardPanel>
     <template #header>
       <UDashboardNavbar
         title="Upload New Game"
@@ -82,13 +93,8 @@ const handleCreate = async () => {
             Back to My Games
           </UButton>
         </template>
-      </UDashboardNavbar>
-    </template>
 
-    <template #body>
-      <div v-if="yamlContent" class="space-y-6">
-        <!-- Auto-detected info and Create button -->
-        <div class="flex items-center justify-between">
+        <template #trailing>
           <div class="flex items-center gap-4 text-sm">
             <div>
               <span class="opacity-75">Game:</span>
@@ -99,7 +105,10 @@ const handleCreate = async () => {
               <span class="font-mono ml-2">{{ yamlFilename }}</span>
             </div>
           </div>
+        </template>
 
+        <template #right>
+          <div id="navbarActions" class="flex items-center justify-end"></div>
           <UButton
             :loading="uploading"
             :disabled="uploading || !canCreate"
@@ -110,13 +119,18 @@ const handleCreate = async () => {
           >
             Create Game
           </UButton>
-        </div>
+        </template>
+      </UDashboardNavbar>
+    </template>
 
+    <template #body>
+      <div v-if="yamlContent" class="space-y-6 flex-1 flex">
         <!-- YAML Editor Component -->
         <YamlEditor
           v-model="yamlContent"
           :loading="uploading"
           :show-save-button="false"
+          teleportActionsTo="#navbarActions"
         />
       </div>
 

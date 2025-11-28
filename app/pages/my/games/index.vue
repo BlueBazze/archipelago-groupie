@@ -118,6 +118,7 @@ const columns: ColumnDef<Game>[] = [
         v-else-if="games && games.length === 0"
         icon="i-heroicons-inbox"
         title="No games yet"
+        variant="naked"
         description="Upload your first YAML configuration to get started"
       >
         <template #actions>

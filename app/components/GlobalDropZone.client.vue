@@ -3,6 +3,7 @@ const router = useRouter();
 const toast = useToast();
 
 const instance = getCurrentInstance();
+const uploadFileContent = useUploadFileContent();
 
 const { files, isOverDropZone } = useDropZone(document.body, {
   // dataTypes: ["text/yaml", "text/x-yaml", "application/x-yaml"],
@@ -46,12 +47,18 @@ const { files, isOverDropZone } = useDropZone(document.body, {
       // Extract game name from filename (without extension)
       const gameName = file.name.replace(/\.ya?ml$/i, "");
 
+      uploadFileContent.value = content;
+
       // Navigate to new game page with data
       navigateTo({
         path: "/my/games/new",
-        query: {
-          content: content,
-        },
+
+        // state: {
+        //   content: content,
+        // },
+        // query: {
+        //   content: content,
+        // },
       });
     } catch (err: any) {
       toast.add({
