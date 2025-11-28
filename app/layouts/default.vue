@@ -1,24 +1,31 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from "@nuxt/ui";
 
-const { user, clear } = useUserSession();
+const { user, clear, fetch: fetchUserSession } = useUserSession();
 
 const isAdmin = computed(() => user.value?.role === "admin");
 const appConfig = useAppConfig();
+const toast = useToast();
 
 const { data: players } = useFetch("/api/players");
 
-const handleLogout = async () => {
+async function handleLogout() {
+  console.log("handleLogout");
   try {
     await $fetch("/api/auth/logout", {
       method: "POST",
     });
-    clear();
+    await clear();
+    await fetchUserSession();
     navigateTo("/login");
   } catch (err: any) {
-    alert("Failed to logout");
+    toast.add({
+      title: "Failed to logout",
+      description: err.data?.message || "Failed to logout",
+      color: "error",
+    });
   }
-};
+}
 
 const route = useRoute();
 
@@ -90,7 +97,7 @@ const links = computed<NavigationMenuItem[]>(() => [
 
 const { exportAllGames } = useExport();
 
-const userMenuItems = computed(() => [
+const userMenuItems = computed<NavigationMenuItem[]>(() => [
   // {
   //   label: user.value?.username || "User",
   //   slot: "account",
@@ -108,7 +115,7 @@ const userMenuItems = computed(() => [
   {
     label: "Logout",
     icon: "lucide:log-out",
-    click: handleLogout,
+    onSelect: handleLogout,
   },
 ]);
 </script>

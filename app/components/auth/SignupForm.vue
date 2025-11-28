@@ -4,6 +4,7 @@ import type { FormSubmitEvent, AuthFormField, AuthFormProps } from "@nuxt/ui";
 
 const toast = useToast();
 const authForm = useTemplateRef("authForm");
+const { fetch: fetchUserSession } = useUserSession();
 const props = withDefaults(defineProps<AuthFormProps<Schema>>(), {
   submit: {
     // @ts-expect-error - label is a valid prop for ButtonProps
@@ -64,6 +65,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     });
 
     if (response.success) {
+      await fetchUserSession();
       emit("complete", true);
     }
   } catch (error: any) {

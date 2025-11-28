@@ -17,6 +17,7 @@
     "@nuxthub/core": "0.9.1",
     "@vueuse/core": "^14.1.0",
     "@vueuse/nuxt": "14.1.0",
+    "canvas-confetti": "^1.9.4",
     "drizzle-orm": "^0.44.7",
     "jszip": "^3.10.1",
     "monaco-editor": "*",
@@ -29,6 +30,7 @@
     "zod": "^4.1.13"
   },
   "devDependencies": {
+    "@types/canvas-confetti": "^1.9.0",
     "@types/jszip": "^3.4.1",
     "@types/node": "^24.10.1",
     "drizzle-kit": "^0.31.7",
