@@ -173,9 +173,9 @@ const userMenuItems = computed(() => [
       </template>
     </UDashboardSidebar>
 
-    <!-- <ClientOnly>
+    <ClientOnly>
       <GlobalDropZone />
-    </ClientOnly> -->
+    </ClientOnly>
     <slot />
   </UDashboardGroup>
 </template>
