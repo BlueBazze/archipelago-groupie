@@ -138,7 +138,7 @@ const handleCreate = async () => {
         v-else
         icon="i-heroicons-cloud-arrow-up"
         variant="naked"
-        title="HAH! What a boomer! Expecting an upload page :'D'"
+        title="HAH! What a boomer! Expecting an upload page :'D"
         description="You can't upload a YAML file here. You need to drag and drop it anywhere in the application."
       />
       <!-- title="Drop YAML File Anywhere"
