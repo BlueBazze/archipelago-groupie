@@ -14,8 +14,9 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
     "nuxt-monaco-editor",
   ],
-
   css: [resolve("./app/assets/css/main.css")],
+
+  ssr: false,
 
   experimental: {
     typedPages: true,
