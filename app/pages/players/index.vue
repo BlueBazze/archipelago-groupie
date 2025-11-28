@@ -143,6 +143,8 @@ const columns: ColumnDef<Player>[] = [
       </UDashboardNavbar>
     </template>
     <template #body>
+      <CommonRickGrimesButton />
+
       <USkeleton v-if="pending" class="flex-1" />
 
       <UEmpty
