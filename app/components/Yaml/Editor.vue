@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const yamlContent = defineModel<string>({ required: true });
 
+const colorMode = useColorMode();
+
 const props = withDefaults(
   defineProps<{
     loading?: boolean;
@@ -110,6 +112,7 @@ const cancelSave = () => {
       readOnly: false,
       renderSideBySide: true,
       originalEditable: false,
+      theme: colorMode.value === 'dark' ? 'vs-dark' : 'vs',
     }"
   />
 
@@ -125,6 +128,7 @@ const cancelSave = () => {
       wordWrap: 'on',
       tabSize: 2,
       insertSpaces: true,
+      theme: colorMode.value === 'dark' ? 'vs-dark' : 'vs',
     }"
   />
 

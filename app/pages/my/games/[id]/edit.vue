@@ -49,32 +49,38 @@ const handleSave = async () => {
 </script>
 
 <template>
-  <UContainer>
-    <UPageHeader
-      title="Edit Game"
-      :description="game?.name || 'Loading...'"
-      class="mb-8"
-    >
-      <template #links>
-        <UButton to="/my/games" variant="ghost" icon="i-heroicons-arrow-left">
-          Back to My Games
-        </UButton>
-      </template>
-    </UPageHeader>
+  <UDashboardPanel :ui="{ body: 'p-0 sm:p-0 gap-2 sm:gap-0' }">
+    <template #header>
+      <UDashboardNavbar
+        title="Edit Game"
+        :description="game?.name || 'Loading...'"
+      >
+        <template #links>
+          <UButton to="/my/games" variant="ghost" icon="i-heroicons-arrow-left">
+            Back to My Games
+          </UButton>
+        </template>
+        <template #right>
+          <div id="navbarActions" class="flex items-center justify-end"></div>
+        </template>
+      </UDashboardNavbar>
+    </template>
+    <template #body>
+      <USkeleton v-if="pending" class="h-96" />
 
-    <USkeleton v-if="pending" class="h-96" />
+      <YamlEditor
+        v-else-if="game && game.yamlContent"
+        v-model="yamlContent"
+        :loading="saving"
+        @save="handleSave"
+        teleportActionsTo="#navbarActions"
+      />
 
-    <YamlEditor
-      v-else-if="game && game.yamlContent"
-      v-model="yamlContent"
-      :loading="saving"
-      @save="handleSave"
-    />
-
-    <UEmpty
-      v-else-if="game"
-      title="No YAML content"
-      description="No YAML content available for this game"
-    />
-  </UContainer>
+      <UEmpty
+        v-else-if="game"
+        title="No YAML content"
+        description="No YAML content available for this game"
+      />
+    </template>
+  </UDashboardPanel>
 </template>

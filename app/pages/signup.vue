@@ -9,6 +9,10 @@ const { loggedIn } = useUserSession();
 if (loggedIn.value) {
   navigateTo("/");
 }
+
+function onComplete() {
+  navigateTo("/");
+}
 </script>
 
 <template>
@@ -22,7 +26,7 @@ if (loggedIn.value) {
         </p>
       </div>
 
-      <AuthSignupForm />
+      <AuthSignupForm @complete="onComplete" />
 
       <!-- Footer Info -->
       <p class="mt-6 text-center text-sm text-muted">
