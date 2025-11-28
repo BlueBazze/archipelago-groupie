@@ -7,7 +7,7 @@ const randomLabelText = [
   "Final warning!",
   "You will be sorry if you click me again!",
   "Wait, this button isn't supposed to be here!",
-  "DID I STUTTER? - Junior",
+  "DID I STUTTER BITCH? - Junior",
 ];
 
 const isOpen = ref(false);
