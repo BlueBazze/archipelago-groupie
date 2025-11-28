@@ -71,58 +71,62 @@ const handleCreate = async () => {
 </script>
 
 <template>
-  <UContainer class="max-w-6xl">
-    <UPageHeader
-      title="Upload New Game"
-      description="Drop a YAML file anywhere on the page to upload"
-      class="mb-8"
-    >
-      <template #links>
-        <UButton to="/my/games" variant="ghost" icon="i-heroicons-arrow-left">
-          Back to My Games
-        </UButton>
-      </template>
-    </UPageHeader>
+  <UDashboardPanel >
+    <template #header>
+      <UDashboardNavbar
+        title="Upload New Game"
+        description="Drop a YAML file anywhere on the page to upload"
+      >
+        <template #links>
+          <UButton to="/my/games" variant="ghost" icon="i-heroicons-arrow-left">
+            Back to My Games
+          </UButton>
+        </template>
+      </UDashboardNavbar>
+    </template>
 
-    <div v-if="yamlContent" class="space-y-6">
-      <!-- Auto-detected info and Create button -->
-      <div class="flex items-center justify-between">
-        <div class="flex items-center gap-4 text-sm">
-          <div>
-            <span class="opacity-75">Game:</span>
-            <span class="font-semibold ml-2">{{ gameName }}</span>
+    <template #body>
+      <div v-if="yamlContent" class="space-y-6">
+        <!-- Auto-detected info and Create button -->
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-4 text-sm">
+            <div>
+              <span class="opacity-75">Game:</span>
+              <span class="font-semibold ml-2">{{ gameName }}</span>
+            </div>
+            <div>
+              <span class="opacity-75">Filename:</span>
+              <span class="font-mono ml-2">{{ yamlFilename }}</span>
+            </div>
           </div>
-          <div>
-            <span class="opacity-75">Filename:</span>
-            <span class="font-mono ml-2">{{ yamlFilename }}</span>
-          </div>
+
+          <UButton
+            :loading="uploading"
+            :disabled="uploading || !canCreate"
+            size="lg"
+            color="primary"
+            icon="i-heroicons-plus"
+            @click="handleCreate"
+          >
+            Create Game
+          </UButton>
         </div>
 
-        <UButton
+        <!-- YAML Editor Component -->
+        <YamlEditor
+          v-model="yamlContent"
           :loading="uploading"
-          :disabled="uploading || !canCreate"
-          size="lg"
-          color="primary"
-          icon="i-heroicons-plus"
-          @click="handleCreate"
-        >
-          Create Game
-        </UButton>
+          :show-save-button="false"
+        />
       </div>
 
-      <!-- YAML Editor Component -->
-      <YamlEditor
-        v-model="yamlContent"
-        :loading="uploading"
-        :show-save-button="false"
+      <UEmpty
+        v-else
+        icon="i-heroicons-cloud-arrow-up"
+        variant="naked"
+        title="Drop YAML File Anywhere"
+        description="Drag and drop a .yml or .yaml file anywhere on this page to upload it"
       />
-    </div>
-
-    <UEmpty
-      v-else
-      icon="i-heroicons-cloud-arrow-up"
-      title="Drop YAML File Anywhere"
-      description="Drag and drop a .yml or .yaml file anywhere on this page to upload it"
-    />
-  </UContainer>
+    </template>
+  </UDashboardPanel>
 </template>

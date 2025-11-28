@@ -1,15 +1,18 @@
 <script setup lang="ts">
 const yamlContent = defineModel<string>({ required: true });
 
-interface Props {
-  loading?: boolean;
-  showSaveButton?: boolean;
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  loading: false,
-  showSaveButton: true,
-});
+const props = withDefaults(
+  defineProps<{
+    loading?: boolean;
+    showSaveButton?: boolean;
+    teleportActionsTo?: string;
+  }>(),
+  {
+    loading: false,
+    showSaveButton: true,
+    teleportActionsTo: "#defaultActions",
+  }
+);
 
 const emit = defineEmits<{
   save: [];
@@ -55,41 +58,44 @@ const cancelSave = () => {
 </script>
 
 <template>
+  <div id="defaultActions"></div>
   <!-- Action Buttons -->
-  <div
-    v-if="showSaveButton && (showDiff || hasChanges)"
-    class="flex justify-end gap-2 mb-4"
-  >
-    <UButton
-      v-if="showDiff"
-      variant="ghost"
-      @click="cancelSave"
-      :disabled="loading"
+  <Teleport :to="teleportActionsTo">
+    <div
+      v-if="showSaveButton && (showDiff || hasChanges)"
+      class="flex justify-end gap-2"
     >
-      Cancel
-    </UButton>
-    <UButton
-      v-if="showDiff"
-      color="primary"
-      :loading="loading"
-      :disabled="loading"
-      size="lg"
-      icon="i-heroicons-check"
-      @click="confirmSave"
-    >
-      Confirm & Save
-    </UButton>
-    <UButton
-      v-else
-      :loading="loading"
-      :disabled="loading"
-      size="lg"
-      icon="i-heroicons-check"
-      @click="handleSaveClick"
-    >
-      Save Changes
-    </UButton>
-  </div>
+      <UButton
+        v-if="showDiff"
+        variant="ghost"
+        @click="cancelSave"
+        :disabled="loading"
+      >
+        Cancel
+      </UButton>
+      <UButton
+        v-if="showDiff"
+        color="primary"
+        :loading="loading"
+        :disabled="loading"
+        size="lg"
+        icon="i-heroicons-check"
+        @click="confirmSave"
+      >
+        Confirm & Save
+      </UButton>
+      <UButton
+        v-else
+        :loading="loading"
+        :disabled="loading"
+        size="lg"
+        icon="i-heroicons-check"
+        @click="handleSaveClick"
+      >
+        Save Changes
+      </UButton>
+    </div>
+  </Teleport>
 
   <!-- Diff Editor (shown when confirming) -->
   <MonacoDiffEditor
@@ -97,7 +103,7 @@ const cancelSave = () => {
     :original="yamlContent"
     v-model="draftContent"
     lang="yaml"
-    :style="{ height: '600px' }"
+    class="flex-1"
     :options="{
       readOnly: false,
       renderSideBySide: true,
@@ -110,9 +116,9 @@ const cancelSave = () => {
     v-else
     v-model="draftContent"
     lang="yaml"
-    :style="{ height: '600px' }"
+    class="flex-1"
     :options="{
-      minimap: { enabled: false },
+      minimap: { enabled: true },
       lineNumbers: 'on',
       wordWrap: 'on',
       tabSize: 2,

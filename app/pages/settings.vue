@@ -5,25 +5,29 @@ definePageMeta({
 </script>
 
 <template>
-  <UContainer class="max-w-4xl">
-    <UPageHeader
-      title="Settings"
-      description="Configure application settings"
-      class="mb-8"
-    />
+  <UDashboardPanel :ui="{ body: 'p-0' }">
+    <template #header>
+      <UDashboardNavbar
+        title="Settings"
+        description="Configure application settings"
+        :ui="{ root: 'border-none' }"
+      />
+    </template>
+    <template #body>
+      <div>
+        <h2 class="text-xl font-semibold mb-4">Settings</h2>
 
-    <UContainer>
-      <h2 class="text-xl font-semibold mb-4">Application Settings</h2>
-      <AdminSettingsForm />
-    </UContainer>
+        <AdminSettingsForm />
+      </div>
 
-    <UContainer>
-      <h2 class="text-xl font-semibold mb-4">Export All Games</h2>
-      <p class="text-sm opacity-75 mb-4">
-        Export all player YAML configurations as a ZIP file to upload to the
-        Archipelago website.
-      </p>
-      <AdminExportButton />
-    </UContainer>
-  </UContainer>
+      <div>
+        <h2 class="text-xl font-semibold mb-4">Export</h2>
+        <p class="text-sm opacity-75 mb-4">
+          Export all player YAML configurations as a ZIP file to upload to the
+          Archipelago website.
+        </p>
+        <AdminExportButton />
+      </div>
+    </template>
+  </UDashboardPanel>
 </template>

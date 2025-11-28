@@ -12,10 +12,14 @@ interface Game {
   uploadedAt: Date | string | null;
 }
 
-const route = useRoute();
+const route = useRoute('players-id-games');
 const playerId = computed(() => parseInt(route.params.id as string));
 
-const { data: games, pending, refresh } = useFetch<Game[]>(`/api/player/${playerId.value}/games`);
+const {
+  data: games,
+  pending,
+  refresh,
+} = useFetch<Game[]>(`/api/player/${playerId.value}/games`);
 
 // Fetch player info
 const { data: players } = useFetch("/api/players");
@@ -53,7 +57,7 @@ const columns: ColumnDef<Game>[] = [
     accessorKey: "name",
     header: "Game Name",
     cell: ({ row }) => {
-      const UIcon = resolveComponent('UIcon');
+      const UIcon = resolveComponent("UIcon");
       const game = row.original;
       return h("div", { class: "flex items-center gap-3" }, [
         h(UIcon, {
@@ -80,7 +84,7 @@ const columns: ColumnDef<Game>[] = [
     id: "actions",
     header: "Actions",
     cell: ({ row }) => {
-      const UButton = resolveComponent('UButton');
+      const UButton = resolveComponent("UButton");
       const game = row.original;
       return h("div", { class: "flex gap-2 justify-end" }, [
         h(
@@ -112,35 +116,32 @@ const columns: ColumnDef<Game>[] = [
 </script>
 
 <template>
-  <UContainer>
-    <UPageHeader
-      :title="`${player?.username || 'Player'}'s Games`"
-      description="View and manage YAML configurations for this player"
-      class="mb-8"
-    >
-      <template #links>
-        <UButton
-          to="/players"
-          variant="ghost"
-          icon="i-heroicons-arrow-left"
-        >
-          Back to Players
-        </UButton>
-      </template>
-    </UPageHeader>
+  <UDashboardPanel :ui="{ body: 'p-0' }">
+    <template #header>
+      <UDashboardNavbar
+        :title="`${player?.username || 'Player'}'s Games`"
+        description="View and manage YAML configurations for this player"
+        :ui="{ root: 'border-none' }"
+      >
+        <template #links>
+          <UButton to="/players" variant="ghost" icon="i-heroicons-arrow-left">
+            Back to Players
+          </UButton>
+        </template>
+      </UDashboardNavbar>
+    </template>
 
-    <USkeleton v-if="pending" class="h-64" />
+    <template #body>
+      <USkeleton v-if="pending" class="h-64" />
 
-    <UEmpty
-      v-else-if="games && games.length === 0"
-      icon="i-heroicons-inbox"
-      title="No games yet"
-      description="This player hasn't uploaded any games yet"
-    />
+      <UEmpty
+        v-else-if="games && games.length === 0"
+        icon="i-heroicons-inbox"
+        title="No games yet"
+        description="This player hasn't uploaded any games yet"
+      />
 
-    <UCard v-else-if="games" class="overflow-hidden">
-      <UTable :data="games" :columns="columns" />
-    </UCard>
-  </UContainer>
+      <UTable v-else-if="games" :data="games" :columns="columns" />
+    </template>
+  </UDashboardPanel>
 </template>
-

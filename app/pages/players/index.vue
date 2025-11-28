@@ -128,36 +128,37 @@ const columns: ColumnDef<Player>[] = [
 </script>
 
 <template>
-  <UContainer>
-    <UPageHeader
-      title="Players"
-      description="Manage all players in the system"
-      class="mb-8"
-    >
-      <template #actions>
-        <UButton to="/players/new" size="lg" icon="i-heroicons-plus">
-          Create Player
-        </UButton>
-      </template>
-    </UPageHeader>
+  <UDashboardPanel :ui="{ body: 'p-0' }">
+    <template #header>
+      <UDashboardNavbar
+        title="Players"
+        description="Manage all players in the system"
+        :ui="{ root: 'border-none' }"
+      >
+        <template #actions>
+          <UButton to="/players/new" size="lg" icon="i-heroicons-plus">
+            Create Player
+          </UButton>
+        </template>
+      </UDashboardNavbar>
+    </template>
+    <template #body>
+      <USkeleton v-if="pending" class="flex-1" />
 
-    <USkeleton v-if="pending" class="h-64" />
+      <UEmpty
+        v-else-if="players && players.length === 0"
+        icon="i-heroicons-users"
+        title="No players found"
+        description="There are no players in the system"
+      >
+        <template #actions>
+          <UButton to="/players/new" size="lg" icon="i-heroicons-plus">
+            Create Player
+          </UButton>
+        </template>
+      </UEmpty>
 
-    <UEmpty
-      v-else-if="players && players.length === 0"
-      icon="i-heroicons-users"
-      title="No players found"
-      description="There are no players in the system"
-    >
-      <template #actions>
-        <UButton to="/players/new" size="lg" icon="i-heroicons-plus">
-          Create Player
-        </UButton>
-      </template>
-    </UEmpty>
-
-    <UCard v-else-if="players" class="overflow-hidden">
-      <UTable :data="players" :columns="columns" />
-    </UCard>
-  </UContainer>
+      <UTable v-else-if="players" :data="players" :columns="columns" />
+    </template>
+  </UDashboardPanel>
 </template>

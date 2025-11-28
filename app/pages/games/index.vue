@@ -85,24 +85,26 @@ const columns: ColumnDef<Game>[] = [
 </script>
 
 <template>
-  <UContainer>
-    <UPageHeader
-      title="All Games"
-      description="View all uploaded YAML configurations from all players"
-      class="mb-8"
-    />
+  <UDashboardPanel>
+    <template #header>
+      <UDashboardNavbar
+        title="All Games"
+        description="View all uploaded YAML configurations from all players"
+        :ui="{ root: 'border-none' }"
+      >
+      </UDashboardNavbar>
+    </template>
+    <template #body>
+      <USkeleton v-if="pending" class="h-64" />
 
-    <USkeleton v-if="pending" class="h-64" />
+      <UEmpty
+        v-else-if="games && games.length === 0"
+        icon="i-heroicons-inbox"
+        title="No games yet"
+        description="No games have been uploaded yet"
+      />
 
-    <UEmpty
-      v-else-if="games && games.length === 0"
-      icon="i-heroicons-inbox"
-      title="No games yet"
-      description="No games have been uploaded yet"
-    />
-
-    <UCard v-else-if="games" class="overflow-hidden">
-      <UTable :data="games" :columns="columns" />
-    </UCard>
-  </UContainer>
+      <UTable v-else-if="games" :data="games" :columns="columns" />
+    </template>
+  </UDashboardPanel>
 </template>

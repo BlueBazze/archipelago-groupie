@@ -98,36 +98,36 @@ const columns: ColumnDef<Game>[] = [
 </script>
 
 <template>
-  <UContainer>
-    <UPageHeader
-      title="My Games"
-      description="Manage your uploaded YAML configurations"
-      class="mb-8"
-    >
-      <template #actions>
-        <UButton to="/my/games/new" size="lg" icon="i-heroicons-plus">
-          Upload New Game
-        </UButton>
-      </template>
-    </UPageHeader>
+  <UDashboardPanel>
+    <template #header>
+      <UDashboardNavbar
+        title="My Games"
+        description="Manage your uploaded YAML configurations"
+        :ui="{ root: 'border-none' }"
+      >
+        <template #leading>
+          <UDashboardSidebarCollapse />
+        </template>
+      </UDashboardNavbar>
+    </template>
 
-    <USkeleton v-if="pending" class="h-64" />
+    <template #body>
+      <USkeleton v-if="pending && games?.length === 0" class="h-64" />
 
-    <UEmpty
-      v-else-if="games && games.length === 0"
-      icon="i-heroicons-inbox"
-      title="No games yet"
-      description="Upload your first YAML configuration to get started"
-    >
-      <template #actions>
-        <UButton to="/my/games/new" size="lg" icon="i-heroicons-plus">
-          Upload Game
-        </UButton>
-      </template>
-    </UEmpty>
+      <UEmpty
+        v-else-if="games && games.length === 0"
+        icon="i-heroicons-inbox"
+        title="No games yet"
+        description="Upload your first YAML configuration to get started"
+      >
+        <template #actions>
+          <UButton to="/my/games/new" size="lg" icon="i-heroicons-plus">
+            Upload Game
+          </UButton>
+        </template>
+      </UEmpty>
 
-    <UCard v-else-if="games" class="overflow-hidden">
-      <UTable :data="games" :columns="columns" />
-    </UCard>
-  </UContainer>
+      <UTable v-else-if="games" :data="games" :columns="columns" />
+    </template>
+  </UDashboardPanel>
 </template>
