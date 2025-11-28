@@ -63,7 +63,12 @@ function onVideoEnded() {
       :data-hasBeenClicked="hasBeenClicked"
     />
   </div>
-  <UModal v-model:open="isOpen" fullscreen :ui="{ content: 'bg-black' }">
+  <UModal
+    v-model:open="isOpen"
+    fullscreen
+    :ui="{ content: 'bg-black' }"
+    :dismissible="false"
+  >
     <template #content>
       <video
         src="/video/rick_grimes.mp4"
