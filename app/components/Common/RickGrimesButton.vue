@@ -61,7 +61,8 @@ function onVideoEnded() {
     <UButton
       :label="label"
       @click="onClick"
-      class="data-[hasBeenClicked='false']:opacity-3"
+      color="success"
+      class="data-[hasBeenClicked='false']:opacity-10"
       :data-hasBeenClicked="hasBeenClicked"
     />
   </div>
