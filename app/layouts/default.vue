@@ -183,6 +183,15 @@ const userMenuItems = computed<NavigationMenuItem[]>(() => [
           class="w-full"
         />
       </template>
+      <template #resize-handle="resizeProps">
+        <UDashboardResizeHandle v-bind="resizeProps">
+          <CommonBorderBeam
+            :duration="0.2"
+            :size="40"
+            class="from-transparent via-red-500 to-transparent"
+          />
+        </UDashboardResizeHandle>
+      </template>
     </UDashboardSidebar>
 
     <ClientOnly>

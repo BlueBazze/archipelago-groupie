@@ -13,6 +13,7 @@
         "drizzle-orm": "^0.44.7",
         "jszip": "^3.10.1",
         "monaco-editor": "*",
+        "motion-v": "^1.7.4",
         "nuxt": "^4.2.1",
         "nuxt-auth-utils": "0.5.25",
         "nuxt-monaco-editor": "1.4.0",
