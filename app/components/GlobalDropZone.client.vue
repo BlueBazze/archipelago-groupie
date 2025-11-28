@@ -73,4 +73,7 @@ const { files, isOverDropZone } = useDropZone(document.body, {
 
 <template>
   <!-- This component has no template, it only provides drop zone functionality -->
+  <div>
+    <slot />
+  </div>
 </template>
