@@ -143,7 +143,7 @@ const columns: ColumnDef<Player>[] = [
       </UDashboardNavbar>
     </template>
     <template #body>
-      <CommonRickGrimesButton />
+      <CommonRickGrimesButton v-if="Math.random() < 0.3" />
 
       <USkeleton v-if="pending" class="flex-1" />
 
