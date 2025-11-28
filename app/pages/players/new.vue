@@ -8,7 +8,7 @@ const router = useRouter();
 const handleSuccess = (result: any) => {
   // Show success message and redirect after a delay
   setTimeout(() => {
-    router.push("/players");
+    navigateTo("/players");
   }, 3000);
 };
 </script>
@@ -21,11 +21,7 @@ const handleSuccess = (result: any) => {
       class="mb-8"
     >
       <template #links>
-        <UButton
-          to="/players"
-          variant="ghost"
-          icon="i-heroicons-arrow-left"
-        >
+        <UButton to="/players" variant="ghost" icon="i-heroicons-arrow-left">
           Back to Players
         </UButton>
       </template>
@@ -36,4 +32,3 @@ const handleSuccess = (result: any) => {
     </UCard>
   </UContainer>
 </template>
-

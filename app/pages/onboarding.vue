@@ -60,25 +60,25 @@ async function handleConfigComplete() {
     <!-- Onboarding Card -->
 
     <!-- Stepper -->
-    <ClientOnly>
+    <!-- <ClientOnly>
       <UStepper
         v-model="currentStep"
         :items="items"
         class="mb-6"
         linear
         disabled
-      >
-        <!-- Step 1: Admin Account -->
-        <template #admin-account>
+      > -->
+    <!-- Step 1: Admin Account -->
+    <!-- <template #admin-account>
           <OnboardingAdminAccountStep @complete="handleAdminAccountComplete" />
-        </template>
+        </template> -->
 
-        <!-- Step 2: Application Configuration -->
-        <template #application-config>
+    <!-- Step 2: Application Configuration -->
+    <!-- <template #application-config>
           <OnboardingApplicationConfigStep @complete="handleConfigComplete" />
         </template>
       </UStepper>
-    </ClientOnly>
+    </ClientOnly> -->
 
     <!-- Footer Info -->
     <p class="mt-6 text-center text-sm text-muted">
