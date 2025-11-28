@@ -118,7 +118,10 @@ const userMenuItems = computed(() => [
     <UDashboardSidebar
       collapsible
       resizable
-      :ui="{ header: 'justify-between items-center!' }"
+      :ui="{
+        header: 'justify-between items-center!',
+        footer: 'flex-col w-full',
+      }"
     >
       <template #header="{ collapsed }">
         <div class="items-center justify-center"></div>
@@ -164,6 +167,8 @@ const userMenuItems = computed(() => [
         />
       </template>
       <template #footer="{ collapsed }">
+        <CommonChica />
+        <br />
         <UColorModeSelect
           :content="{ side: 'right' }"
           color="neutral"
