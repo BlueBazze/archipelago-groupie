@@ -4,6 +4,7 @@ import type { NavigationMenuItem } from "@nuxt/ui";
 const { user, clear } = useUserSession();
 
 const isAdmin = computed(() => user.value?.role === "admin");
+const appConfig = useAppConfig();
 
 const { data: players } = useFetch("/api/players");
 
@@ -162,8 +163,19 @@ const userMenuItems = computed(() => [
           orientation="vertical"
         />
       </template>
-      <template #footer="{ collapsed }"> </template>
+      <template #footer="{ collapsed }">
+        <UColorModeSelect
+          :content="{ side: 'right' }"
+          color="neutral"
+          :trailingIcon="appConfig.ui.icons.chevronRight"
+          class="w-full"
+        />
+      </template>
     </UDashboardSidebar>
+
+    <!-- <ClientOnly>
+      <GlobalDropZone />
+    </ClientOnly> -->
     <slot />
   </UDashboardGroup>
 </template>
