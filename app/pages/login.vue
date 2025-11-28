@@ -3,52 +3,11 @@ definePageMeta({
   layout: "none",
 });
 
-const toast = useToast();
-const router = useRouter();
-const { loggedIn, fetch: fetchSession } = useUserSession();
+const { loggedIn } = useUserSession();
 
 // If already logged in, redirect to home
 if (loggedIn.value) {
   navigateTo("/");
-}
-
-const loading = ref(false);
-
-// Handle form submission
-async function handleSubmit(data: { username: string; password: string }) {
-  loading.value = true;
-
-  try {
-    const response = await $fetch("/api/auth/login", {
-      method: "POST",
-      body: {
-        username: data.username,
-        password: data.password,
-      },
-    });
-
-    if (response.success) {
-      toast.add({
-        title: "Welcome back!",
-        description: `Logged in as ${response.user.username}`,
-        color: "success",
-      });
-
-      // Fetch session to update state
-      await fetchSession();
-
-      // Redirect to home page
-      await router.push("/");
-    }
-  } catch (err: any) {
-    toast.add({
-      title: "Login Failed",
-      description: err.data?.message || "Invalid username or password",
-      color: "error",
-    });
-  } finally {
-    loading.value = false;
-  }
 }
 </script>
 
@@ -61,14 +20,7 @@ async function handleSubmit(data: { username: string; password: string }) {
         <p class="text-muted">Sign in to manage your game sessions</p>
       </div>
 
-      <AuthLoginForm :loading="loading" />
-
-      <!-- <template #footer>
-        <div class="text-center text-sm">
-          <span class="text-muted">Don't have an account?</span>
-          <NuxtLink to="/signup" class="ml-1 font-medium"> Sign up </NuxtLink>
-        </div>
-      </template> -->
+      <AuthLoginForm />
 
       <!-- Footer Info -->
       <p class="mt-6 text-center text-sm text-muted">

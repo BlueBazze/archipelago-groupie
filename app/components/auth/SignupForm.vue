@@ -105,5 +105,11 @@ function handleGeneratePassword() {
         Generate password
       </UButton>
     </template>
+    <template #footer>
+      <div class="text-center text-sm">
+        <span class="text-muted">Already have an account?</span>
+        <NuxtLink to="/login" class="ml-1 font-medium"> Sign in </NuxtLink>
+      </div>
+    </template>
   </UAuthForm>
 </template>

@@ -5,6 +5,9 @@ import type { FormSubmitEvent, AuthFormField, AuthFormProps } from "@nuxt/ui";
 const toast = useToast();
 const route = useRoute();
 const { fetch: fetchUserSession } = useUserSession();
+const { data: settings } = useFetch("/api/settings", { method: "GET" });
+
+const allowPlayerSignup = computed(() => settings.value?.allowPlayerSignup);
 
 const props = withDefaults(defineProps<AuthFormProps<Schema>>(), {
   submit: {
@@ -76,5 +79,11 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     :fields="fields"
     @submit="onSubmit"
   >
+    <template #footer>
+      <div v-if="allowPlayerSignup" class="text-center text-sm">
+        <span class="text-muted">Self signup is enabled. Create a player?</span>
+        <NuxtLink to="/signup" class="ml-1 font-medium"> Sign up </NuxtLink>
+      </div>
+    </template>
   </UAuthForm>
 </template>
