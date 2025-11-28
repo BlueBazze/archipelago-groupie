@@ -135,10 +135,12 @@ const columns: ColumnDef<Player>[] = [
         description="Manage all players in the system"
         :ui="{ root: 'border-none' }"
       >
-        <template #actions>
-          <UButton to="/players/new" size="lg" icon="i-heroicons-plus">
-            Create Player
-          </UButton>
+        <template #right>
+          <UButton
+            icon="i-heroicons-plus"
+            label="Create Player"
+            to="/players/new"
+          />
         </template>
       </UDashboardNavbar>
     </template>

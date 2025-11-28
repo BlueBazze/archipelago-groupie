@@ -21,13 +21,14 @@ const emit = defineEmits<{
 }>();
 
 // Form fields
-const fields: AuthFormField[] = [
+const fields = computed<AuthFormField[]>(() => [
   {
     name: "username",
     type: "text",
     label: "Username",
     placeholder: "Enter your username",
     required: true,
+    defaultValue: (route.query.username as string) || "",
   },
   {
     name: "password",
@@ -35,8 +36,9 @@ const fields: AuthFormField[] = [
     label: "Password",
     placeholder: "Enter your password",
     required: true,
+    defaultValue: (route.query.password as string) || "",
   },
-];
+]);
 
 // Form schema
 const schema = z.object({
