@@ -145,7 +145,7 @@ const columns: ColumnDef<Player>[] = [
       </UDashboardNavbar>
     </template>
     <template #body>
-      <CommonRickGrimesButton v-if="Math.random() < 0.3" />
+      <CommonRickGrimesButton v-if="Math.random() < 0.5" />
 
       <USkeleton v-if="pending" class="flex-1" />
 
