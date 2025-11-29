@@ -153,8 +153,17 @@ const userMenuItems = computed<NavigationMenuItem[]>(() => [
             :block="collapsed"
             color="neutral"
             variant="ghost"
-            class="w-full"
-          />
+            class="w-full items-center"
+          >
+            <template #trailing>
+              <UBadge
+                :color="user?.role === 'admin' ? 'warning' : 'primary'"
+                variant="soft"
+                size="xs"
+                :label="user?.role || 'Player()'"
+              />
+            </template>
+          </UButton>
 
           <template #content>
             <UNavigationMenu
